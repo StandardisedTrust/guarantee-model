@@ -172,5 +172,15 @@
 				"text": "Advising text testing"
 			}
 		}
+	],
+	"instructions": [
+		{
+			"instructionFrom": "applicant",
+			"instructionTo": "issuer",
+			"instructionDateTime": "2020-05-03T12:00:00Z",
+			"instructionMessage": {
+				"text": "Please, hurry up"
+			}
+		}
 	]
 }

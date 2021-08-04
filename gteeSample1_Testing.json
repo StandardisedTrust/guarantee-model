@@ -81,7 +81,9 @@
 		"amount": 10000,
 		"currency": "EUR"
 	},
-	"effectiveDateTime": "2020-05-03T12:00:00Z",
+	"effectiveDate": {
+		"date": "2020-05-03"
+	},
 	"governanceRulesAndLaw": {
 		"ruleIdentifier": "URDG",
 		"applicableLaw": "FI"
@@ -162,12 +164,14 @@
 		}
 	],
 	"terminationDetails": {
-		"terminationType": "underlying business finished"
+		"type": "underlying business finished"
 	},
 	"adviceDetails": [
 		{
-			"adviceByParty": "advising",
-			"adviceDateTime": "2020-05-03T12:00:00Z",
+			"byParty": "advising",
+			"date": {
+				"dateTime": "2020-05-03T12:00:00Z"
+			},
 			"additionalInformation": {
 				"text": "Advising text testing"
 			}

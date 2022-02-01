@@ -102,8 +102,24 @@
 		}
 	},
 	"presentationDetails": {
-		"mediumType": "paper",
-		"documentType": "claim form",
+		"enclosedFiles": [
+			{
+				"documentType": "claim form",
+				"mediumType": "electronic",
+				"deliveryChannel": [
+					{
+						"methodType": "email",
+						"deliverTo": "beneficiary",
+						"contactDetails": {
+							"emailAddress": "matti.mallikas@helsinki.fi"
+						}
+					}
+				],
+				"formatType": "Adobe pdf",
+				"identification": "contract.pdf",
+				"enclosure": "Base64BinaryFile"
+			}
+		],
 		"additionalInformation": {
 			"text": "All claims under this guarantee must be made in writing to the undersigned bank at latest on the expiry date of the guarantee in order to be considered."
 		}
@@ -145,26 +161,11 @@
 			"currency": "EUR"
 		}
 	],
-	"enclosedFiles": [
-		{
-			"documentType": "claim form",
-			"mediumType": "electronic",
-			"deliveryChannel": [
-				{
-					"methodType": "email",
-					"deliverTo": "beneficiary",
-					"contactDetails": {
-						"emailAddress": "matti.mallikas@helsinki.fi"
-					}
-				}
-			],
-			"formatType": "Adobe pdf",
-			"identification": "contract.pdf",
-			"enclosure": "Base64BinaryFile"
-		}
-	],
 	"terminationDetails": {
-		"type": "underlying business finished"
+		"type": "underlying business finished",
+		"date": {
+			"date": "2025-05-03"
+		}
 	},
 	"adviceDetails": [
 		{
@@ -174,6 +175,15 @@
 			},
 			"additionalInformation": {
 				"text": "Advising text testing"
+			}
+		},
+		{
+			"byParty": "any bank",
+			"date": {
+				"dateTime": "2020-05-03T12:00:00Z"
+			},
+			"additionalInformation": {
+				"text": "Bank also testing advice"
 			}
 		}
 	],

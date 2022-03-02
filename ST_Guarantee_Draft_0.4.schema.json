@@ -173,7 +173,7 @@
 			}
    		},
 		"governanceRulesAndLaw": {
-			"description": "Definition of rule set and jursidiction",
+			"description": "Definition of rule set and jurisdiction",
 			"type": "object",
 			"properties": {
 				"ruleIdentifier": {
@@ -201,9 +201,12 @@
 			},
 			"required": [ "ruleIdentifier", "applicableLaw"]
 		},
-		"collateral": {
-			"description": "To be added with some code values",
-			"type": "string"
+		"collaterals": {
+			"description": "One or more collaterals and / or facilities linked to a specific guarantee",
+			"type" : "array",
+			"items": {
+				"$ref": "#/definitions/collateral"
+			}
 		},
 		"underlyingTransaction": {
 			"description": "Details of the underlying transaction for which the undertaking is issued",
@@ -231,7 +234,7 @@
 					"$ref": "#/definitions/dateChoice"
 				},
 				"details": {
-					"description": "Optional details of the deliverable: issuer givcen code, name and quantity",
+					"description": "Optional details of the deliverable: issuer given code, name and quantity",
 					"type": "object",
 					"properties": {
 						"code": {
@@ -260,6 +263,14 @@
 			"description": "Details of the presentation related to the undertaking",
 			"type": "object",
 			"properties": {
+				"originalityIndicator": {
+					"description": "Indicates whether the document is an original",
+					"type": "boolean"
+				},
+				"copyIndicator": {
+					"description": "Indicates whether the document is a copy",
+					"type": "boolean"
+				},
 				"enclosedFiles": {
 					"description": "Document(s) enclosed in the undertaking directly related to the undertaking",
 					"$ref": "#/definitions/enclosedFiles"
@@ -659,6 +670,74 @@
 			"type": "string",
 			"enum": [ "unlimited", "fixed" ]
 		},
+		"addressTypes": {
+			"type": "string",
+			"enum": [ "postal", "poBox", "residential", "business", "mail to", "delivery to" ]
+		},
+		"organisationIdentifierTypes": {
+			"type": "string",
+			"enum": [ "BIC = business identifier code", "LEI = legal entity identifier", "bank party", "central bank identifier", "clearing identifier", "certificate of incorporation number", "country identifier code", "customer number", "DUNS", "employer identifier", "global location number", "SIREN", "SIRET", "tax identfier", "local identifier" ]
+		},
+		"privateIdentifierTypes": {
+			"type": "string",
+			"enum": [ "date and place of birth", "alien registration number", "passport number", "customer identifier number", "drivers license number", "employee identifier number", "national identifier number", "social security number", "tax identifier" ]
+		},
+		"nameTypes": {
+			"type": "string",
+			"enum": [ "doctor", "madam", "miss", "mister", "gender neutral", "group", "platform"  ]
+		},
+		"collateralTypes": {
+			"type": "string",
+			"enum": [ "facility", "guarantee", "other"  ]
+		},
+		"ruleIdentifiers": {
+			"type": "string",
+			"enum": [ "ISPR", "NONE", "UCPR", "URDG", "OTHR" ]
+		},
+		"transactionTypes": {
+			"type": "string",
+			"enum": [ "contract", "delivery order", "proforma invoice", "purchase order", "quotation", "tender" ]
+		},
+		"mediumTypes": {
+			"type": "string",
+			"enum": [ "both paper and electronic", "paper", "electronic" ]
+		},
+		"documentTypes": {
+			"type": "string",
+			"enum": [ "beneficiary statement", "commercial invoice", "claim form", "demand", "transfer form", "email" ]
+		},
+		"termsTypes": {
+			"type": "string",
+			"enum": [ "additional terms and conditions", "applied terms and conditions", "charge details", "drawing details", "proceeds assignable", "terms of effectiveness", "transfer", "terms of variation"]
+		},
+		"chargeTypes": {
+			"type": "string",
+			"enum": [ "transfer", "confirmation" ]
+		},
+		"methodTypes": {
+			"type": "string",
+			"enum": [ "courier", "email", "fax", "messenger", "post", "registered mail", "secure email", "SWIFTNet FileAct", "SWIFTNet InterAct", "SWIFT MT", "SWIFT MX", "telecommunication", "web upload/download"]
+		},
+		"undertakingAccountTypes": {
+			"type": "string",
+			"enum": [ "obligor liability", "obligor charges", "obligor settlements" ]
+		},
+		"accountTypes": {
+			"type": "string",
+			"enum": [ "IBAN=International Bank Account Number", "BBAN=Basic Bank Account Number", "proxy/alias for the bank account number" ]
+		},
+		"formatTypes": {
+			"type": "string",
+			"enum": [ "Adobe pdf", "XML=eXtended Markup Language", "spreadsheet (like MS Excel)", "MS Word", "XSLT=eXtensible Stylesheet Language Transformations", "text file" ]
+		},
+		"terminationTypes": {
+			"type": "string",
+			"enum": [ "underlying business finished", "tender non accpetance", "reduction terms fulfilled", "warranty obligation period expired" ]
+		},
+		"demandTypes": {
+			"type": "string",
+			"enum": [ "pay or extend", "pay only" ]
+		},
 		"party": {
 			"description": "guarantee party from ready-made enumeration list",
 			"type" : "object",
@@ -745,10 +824,6 @@
 			"required": [ "partyType", "name"],
 			"additionalProperties": false
 		},
-		"addressTypes": {
-			"type": "string",
-			"enum": [ "postal", "poBox", "residential", "business", "mail to", "delivery to" ]
-		},
 		"address": {
 			"type": "object",
 			"properties": {
@@ -816,17 +891,39 @@
 				}
 			}
 		},
-		"organisationIdentifierTypes": {
-			"type": "string",
-			"enum": [ "BIC = business identifier code", "LEI = legal entity identifier", "bank party", "central bank identifier", "clearing identifier", "certificate of incorporation number", "country identifier code", "customer number", "DUNS", "employer identifier", "global location number", "SIREN", "SIRET", "tax identfier", "local identifier" ]
-		},
-		"privateIdentifierTypes": {
-			"type": "string",
-			"enum": [ "date and place of birth", "alien registration number", "passport number", "customer identifier number", "drivers license number", "employee identifier number", "national identifier number", "social security number", "tax identifier" ]
-		},
-		"nameTypes": {
-			"type": "string",
-			"enum": [ "doctor", "madam", "miss", "mister", "gender neutral", "group", "platform"  ]
+		"collateral": {
+			"description": "Details for collateral / facility for guarantee",
+			"type": "object",
+			"properties": {
+				"collateralType": {
+					"description": "collateral / facility party from ready-made enumeration list",
+					"oneOf": [
+						{
+							"$ref": "#/definitions/collateralTypes"
+						},
+						{
+							"type": "array",
+							"minItems": 1,
+							"maxItems": 1,
+							"uniqueItems": true,
+							"items": { "$ref": "#/definitions/collateralTypes" }
+						}
+					]
+				},
+				"identification": {
+					"type": "string"
+				},
+				"issuer": {
+					"type": "string"
+				},
+				"additionalInformation": {
+					"description": "free text information, or use of URL for ready-made text reference",
+					"type" : "object",
+					"$ref": "#/definitions/uriTextChoice"
+				}
+			},
+			"required": [ "collateralType", "identification" ],
+			"additionalProperties": false
 		},
 		"contactDetail": {
 			"type": "object",
@@ -1054,54 +1151,6 @@
 				},
 				"required": [ "mediumType", "documentType", "deliveryChannel", "identification", "formatType" ]
 			}
-		},
-		"ruleIdentifiers": {
-			"type": "string",
-			"enum": [ "ISPR", "NONE", "UCPR", "URDG", "OTHR" ]
-		},
-		"transactionTypes": {
-			"type": "string",
-			"enum": [ "contract", "delivery order", "proforma invoice", "purchase order", "quotation", "tender" ]
-		},
-		"mediumTypes": {
-			"type": "string",
-			"enum": [ "both paper and electronic", "paper", "electronic" ]
-		},
-		"documentTypes": {
-			"type": "string",
-			"enum": [ "beneficiary statement", "commercial invoice", "claim form", "demand", "transfer form", "email" ]
-		},
-		"termsTypes": {
-			"type": "string",
-			"enum": [ "additional terms and conditions", "applied terms and conditions", "charge details", "drawing details", "proceeds assignable", "terms of effectiveness", "transfer", "terms of variation"]
-		},
-		"chargeTypes": {
-			"type": "string",
-			"enum": [ "transfer", "confirmation" ]
-		},
-		"methodTypes": {
-			"type": "string",
-			"enum": [ "courier", "email", "fax", "messenger", "post", "registered mail", "secure email", "SWIFTNet FileAct", "SWIFTNet InterAct", "SWIFT MT", "SWIFT MX", "telecommunication", "web upload/download"]
-		},
-		"undertakingAccountTypes": {
-			"type": "string",
-			"enum": [ "obligor liability", "obligor charges", "obligor settlements" ]
-		},
-		"accountTypes": {
-			"type": "string",
-			"enum": [ "IBAN=International Bank Account Number", "BBAN=Basic Bank Account Number", "proxy/alias for the bank account number" ]
-		},
-		"formatTypes": {
-			"type": "string",
-			"enum": [ "Adobe pdf", "XML=eXtended Markup Language", "spreadsheet (like MS Excel)", "MS Word", "XSLT=eXtensible Stylesheet Language Transformations", "text file" ]
-		},
-		"terminationTypes": {
-			"type": "string",
-			"enum": [ "underlying business finished", "tender non accpetance", "reduction terms fulfilled", "warranty obligation period expired" ]
-		},
-		"demandTypes": {
-			"type": "string",
-			"enum": [ "pay or extend", "pay only" ]
 		},
 		"dateChoice": {
 			"type": "object",

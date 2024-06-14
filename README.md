@@ -1,4 +1,4 @@
-# semantic model /JSON schema for bank guarantees and stand-by letter of credits
+# semantic model / JSON schema for bank guarantees and stand-by letter of credits
 
 ## Goals of this project
 
